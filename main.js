@@ -1,17 +1,18 @@
 const CONFIG = {
-  SHEET_NAME: 'Post',      // A:投稿日, B:予約チェック, C:投稿内容, G:投稿者名
-  MAP_SHEET_NAME: 'Member',// A:名前, B:DiscordユーザーID
+  SHEET_NAME: 'Posts',      // A:投稿日, B:予約チェック, C:投稿内容, G:投稿者名
+  MAP_SHEET_NAME: 'Members',// A:名前, B:DiscordユーザーID
   TIMEZONE: 'Asia/Tokyo',
   DATE_FMT: 'yyyy/MM/dd',
 };
 
 function getEnv(key) {
   const v = PropertiesService.getScriptProperties().getProperty(key);
-  if (!v) throw new Error(`Missing secret: ${key}（bootstrap.gsでseedSecretsOnce()を実行して保存してね）`);
+  if (!v) throw new Error(`Missing secret: ${key}（env.jsでseedSecretsOnce()を実行してください）`);
   return v;
 }
 
-// 前日アラート
+// ここでトリガーを設定
+// アラート(前日)
 function alertForNotReadyPosts() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
